@@ -17,6 +17,7 @@ public class TESTE {
     public static void main(String[] args) {
         System.out.println("TESTE GITHUB");
         System.out.println("CONSEGUI FAZER O QUE QUERIA DENTRO DO NETBEANS USANDO GITHUB DESKTOP");
+        System.out.println("É NOIS EU SOU SINIXXXTRO!!!");
     }
     
 }
