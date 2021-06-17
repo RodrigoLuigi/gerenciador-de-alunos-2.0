@@ -7,6 +7,7 @@ package Visual;
 
 import Modelo.ModeloTelaPesquisa;
 import cadastroaluno.Aluno;
+import cadastroaluno.Teste;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,10 +26,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
     ArrayList<Aluno> alun;
 
     public void loadTable() {
-        DefaultTableModel modelo = new DefaultTableModel(new Object[]{"Nome", "Idade", "Sexo"}, 0);
-
+        DefaultTableModel modelo = new DefaultTableModel(new Object[]{"NOME", "IDADE", "SEXO", "TURMA", "NOTA", "RESULTADO"}, 0);
+        String resultado = "reprovado";
         for (int i = 0; i < alun.size(); i++) {
-            modelo.addRow(new Object[]{alun.get(i).getNome(), alun.get(i).getIdade(), alun.get(i).getSexo()});
+            if (alun.get(i).isAprovado() == true) {
+                resultado = "aprovado";
+            } else if (alun.get(i).isAprovado() == false) {
+                resultado = "reprovado";
+            }
+            modelo.addRow(new Object[]{alun.get(i).getNome(), alun.get(i).getIdade(), alun.get(i).getSexo(), alun.get(i).getTurma(), alun.get(i).getNota(), resultado});
         }
         tbl_Alunos.setModel(modelo);
     }
@@ -50,6 +56,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
     public TelaPrincipal() {
         initComponents();
+        setResizable(false);
+        setTitle("CADASTRA ALUNO 1.0.0");
         setLocationRelativeTo(null);
         alun = new ArrayList();
 
@@ -57,6 +65,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         txt_Idade.setText("");
         txt_Nome.setEditable(false);
         txt_Idade.setEditable(false);
+        txt_Turma.setEditable(false);
         cbx_Sexo.setEnabled(false);
         btn_Adicionar.setEnabled(false);
         btn_Cancelar.setEnabled(false);
@@ -76,8 +85,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btn_Adicionar = new javax.swing.JButton();
         btn_Cancelar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_Alunos = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         btn_Novo = new javax.swing.JButton();
         btn_Deletar = new javax.swing.JButton();
@@ -92,7 +99,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         txt_Nome = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         cbx_Sexo = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        txt_Turma = new javax.swing.JTextField();
         btn_Editar = new javax.swing.JButton();
+        JScrollPane1 = new javax.swing.JScrollPane();
+        tbl_Alunos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,38 +127,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("CADASTRO DE ALUNOS");
         jLabel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jScrollPane1.setViewportBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        tbl_Alunos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        tbl_Alunos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        tbl_Alunos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "NOME", "IDADE", "SEXO"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tbl_Alunos);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -204,17 +183,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(21, 21, 21)
                 .addComponent(btn_Novo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_Deletar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_Salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
                 .addComponent(btn_Pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_Pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,8 +256,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(cbx_Sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 35, Short.MAX_VALUE))
         );
+
+        jLabel3.setText("TURMA:");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -286,18 +267,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_Idade, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_Idade, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(112, 112, 112)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_Turma))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_Nome, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(55, 55, 55)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,11 +294,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txt_Idade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_Idade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(txt_Turma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(13, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         btn_Editar.setText("EDITAR");
@@ -323,46 +310,78 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        tbl_Alunos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        tbl_Alunos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "NOME", "IDADE", "SEXO", "TURMA", "NOTA", "RESULTADO"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        JScrollPane1.setViewportView(tbl_Alunos);
+        if (tbl_Alunos.getColumnModel().getColumnCount() > 0) {
+            tbl_Alunos.getColumnModel().getColumn(0).setResizable(false);
+            tbl_Alunos.getColumnModel().getColumn(1).setResizable(false);
+            tbl_Alunos.getColumnModel().getColumn(2).setResizable(false);
+            tbl_Alunos.getColumnModel().getColumn(3).setResizable(false);
+            tbl_Alunos.getColumnModel().getColumn(4).setResizable(false);
+            tbl_Alunos.getColumnModel().getColumn(5).setResizable(false);
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btn_Adicionar)
-                        .addGap(27, 27, 27)
-                        .addComponent(btn_Cancelar)
                         .addGap(18, 18, 18)
-                        .addComponent(btn_Editar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_Editar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_Sair, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))))
+                        .addComponent(btn_Sair, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+            .addComponent(JScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(JScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Adicionar)
-                    .addComponent(btn_Cancelar)
                     .addComponent(btn_Sair)
-                    .addComponent(btn_Editar))
-                .addContainerGap())
+                    .addComponent(btn_Editar)
+                    .addComponent(btn_Cancelar)
+                    .addComponent(btn_Adicionar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -402,6 +421,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         txt_Idade.setText("");
         txt_Nome.setEditable(true);
         txt_Idade.setEditable(true);
+        txt_Turma.setEditable(true);
         cbx_Sexo.setEnabled(true);
         btn_Adicionar.setEnabled(true);
         btn_Cancelar.setEnabled(true);
@@ -420,6 +440,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void btn_AdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AdicionarActionPerformed
         Aluno aluno = new Aluno();
+        Teste teste = new Teste();
         boolean cadastrado = false;
         //verificaLista(alun);
         for (int i = 0; i < alun.size(); i++) {
@@ -440,7 +461,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
             //    JOptionPane.showMessageDialog(null, e.getLocalizedMessage() + "\nERRO !!! Somente números!!");
             // }
             aluno.setSexo((String) (cbx_Sexo.getSelectedItem()));
+            aluno.setTurma(txt_Turma.getText());
             aluno.setCadastrado(true);
+            teste.fazerTeste(aluno);
             alun.add(aluno);
             System.out.println("Aluno Adicionado");
             System.out.println("Tamanho da lista: " + alun.size());
@@ -451,8 +474,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         txt_Nome.setText("");
         txt_Idade.setText("");
+        txt_Turma.setText("");
         txt_Nome.setEditable(false);
         txt_Idade.setEditable(false);
+        txt_Turma.setEditable(false);
         cbx_Sexo.setEnabled(false);
         btn_Adicionar.setEnabled(false);
         btn_Cancelar.setEnabled(false);
@@ -466,6 +491,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         txt_Idade.setText("");
         txt_Nome.setEditable(false);
         txt_Idade.setEditable(false);
+        txt_Turma.setEditable(false);
         cbx_Sexo.setEnabled(false);
         btn_Adicionar.setEnabled(false);
         btn_Cancelar.setEnabled(false);
@@ -605,6 +631,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane JScrollPane1;
     private javax.swing.JButton btn_Adicionar;
     private javax.swing.JButton btn_Cancelar;
     private javax.swing.JButton btn_Deletar;
@@ -616,15 +643,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbx_Sexo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_Alunos;
     private javax.swing.JTextField txt_Idade;
     private javax.swing.JTextField txt_Nome;
     private javax.swing.JTextField txt_Pesquisa;
+    private javax.swing.JTextField txt_Turma;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,9 @@ public class Aluno {
     private String nome;
     private int idade;
     private String sexo;
+    private String turma;
+    private float nota;
+    private boolean aprovado;
     private boolean cadastrado;
 
     public String getNome() {
@@ -29,6 +32,30 @@ public class Aluno {
 
     public void setSexo(String sexo) {
         this.sexo = sexo;
+    }
+
+    public String getTurma() {
+        return turma;
+    }
+
+    public void setTurma(String turma) {
+        this.turma = turma;
+    }
+
+    public float getNota() {
+        return nota;
+    }
+
+    public void setNota(float nota) {
+        this.nota = nota;
+    }
+
+    public boolean isAprovado() {
+        return aprovado;
+    }
+
+    public void setAprovado(boolean aprovado) {
+        this.aprovado = aprovado;
     }
 
     public boolean getCadastrado() {
